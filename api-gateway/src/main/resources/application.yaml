@@ -1,0 +1,30 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: api-gateway
+  security:
+    jwt:
+      token-expiration-seconds: 1800
+      secret-key: 123123lk123lkj123123kjh123kjh123k12li12li3oj12lkj3
+  cloud:
+    gateway:
+      routes:
+        - id: usuarios-test
+          predicates:
+            - Path=/usuarios/**
+            - Method=GET
+          uri: http://localhost:8081
+        - id: ms-tickets
+          uri: lb://MS-TICKETS
+          predicates:
+            - Path=/v1/tickets/**
+            - Method=GET
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+  instance:
+    preferIpAddress: true

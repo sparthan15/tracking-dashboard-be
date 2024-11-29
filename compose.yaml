@@ -1,0 +1,41 @@
+version: '2'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: 'charliesol/eureka-server'
+    ports:
+      - "8761:8761"
+    expose:
+      - 8761
+    build:
+      context: ./eureka-server
+      dockerfile: ./Dockerfile
+  api-gateway:
+    container_name: apigateway
+    image: 'charliesol/api-gateway'
+    ports:
+      - "8090:8090"
+    build:
+      context: ./api-gateway
+      dockerfile: ./Dockerfile
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+    depends_on:
+      eureka-server:
+        condition: service_started
+  ms-usuarios:
+    container_name: ms-usuarios
+    image: 'charliesol/ms-usuarios'
+    ports:
+      - "8081:8081"
+    build:
+      context: ./ms-usuarios
+      dockerfile: ./Dockerfile
+  ms-tickets:
+    container_name: ms-tickets
+    image: 'charliesol/ms-tickets'
+    ports:
+      - "8082:8082"
+    build:
+      context: ./ms-usuarios
+      dockerfile: ./Dockerfile
