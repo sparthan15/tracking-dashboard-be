@@ -18,8 +18,7 @@ spring:
         - id: ms-tickets
           uri: lb://MS-TICKETS
           predicates:
-            - Path=/v1/tickets/**
-            - Method=GET
+            - Path=/v1/tickets/**,/v1/messages/**
 
 eureka:
   client:

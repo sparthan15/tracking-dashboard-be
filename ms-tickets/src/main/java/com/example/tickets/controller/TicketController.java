@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Set;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/v1/tickets")
@@ -16,9 +15,10 @@ import java.util.Set;
 public class TicketController {
 
     private final TicketService ticketService;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Set<TicketResponse> getTickets(){
+    public Flux<TicketResponse> getTickets() {
         return ticketService.getTickets();
     }
 }
