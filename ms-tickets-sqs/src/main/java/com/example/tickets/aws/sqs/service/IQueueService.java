@@ -1,5 +1,6 @@
 package com.example.tickets.aws.sqs.service;
 
+
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.GetQueueUrlResult;
 import com.example.tickets.aws.sqs.TicketMessage;
@@ -28,10 +29,10 @@ class AwsSqsService implements IQueueService {
     @Override
     public TicketMessage publishMessage(TicketMessage ticketMessageRequest) {
         try {
-            log.info("Request {}", ticketMessageRequest);
             GetQueueUrlResult queueUrl = amazonSQSClient.getQueueUrl(queueName);
             ticketMessageRequest.setId(UUID.randomUUID().toString());
             ticketMessageRequest.setCreatedAt(LocalDateTime.now());
+            log.info("Request {}", ticketMessageRequest);
             amazonSQSClient.sendMessage(queueUrl.getQueueUrl(), objectMapper.writeValueAsString(ticketMessageRequest));
             return ticketMessageRequest;
         } catch (Exception e) {
