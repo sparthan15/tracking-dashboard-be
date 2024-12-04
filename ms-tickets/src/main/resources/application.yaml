@@ -29,3 +29,16 @@ management:
     web:
       exposure:
         include: '*'
+
+  aws:
+    access:
+      key: ${AWS_ACCESS_KEY}
+    secret:
+      key: ${AWS_SECRET_KEY}
+    queueName: tickets-queue
+
+events:
+  queues:
+    user-created-by-name-queue: user_created_by_name_queue
+    user-created-record-queue: user_created_record_queue
+    user-created-event-type-queue: user_created_event_type_queue

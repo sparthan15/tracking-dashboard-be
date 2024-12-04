@@ -1,4 +1,4 @@
-package com.example.tickets.controller;
+package com.example.tickets.controllers;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Builder;

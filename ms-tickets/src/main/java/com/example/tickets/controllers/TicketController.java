@@ -1,4 +1,4 @@
-package com.example.tickets.controller;
+package com.example.tickets.controllers;
 
 import com.example.tickets.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public class TicketController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Flux<TicketResponse> getTickets() {
+        this.ticketService.findGroupedByTitle();
         return ticketService.getTickets();
     }
 }
