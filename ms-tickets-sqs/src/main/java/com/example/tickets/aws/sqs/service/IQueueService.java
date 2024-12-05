@@ -4,6 +4,7 @@ package com.example.tickets.aws.sqs.service;
 import com.example.tickets.aws.sqs.TicketMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,10 @@ class AwsSqsService implements IQueueService {
     @Value("${aws.queue-url}")
     private String queueUrl;
 
+    @SneakyThrows
     @Override
     public TicketMessage publishMessage(TicketMessage ticketMessageRequest) {
-        try {
+
             ticketMessageRequest.setId(UUID.randomUUID().toString());
             ticketMessageRequest.setCreatedAt(LocalDateTime.now());
             log.info("Request {}", ticketMessageRequest);
@@ -38,9 +40,5 @@ class AwsSqsService implements IQueueService {
                     .messageBody(objectMapper.writeValueAsString(ticketMessageRequest))
                     .build());
             return ticketMessageRequest;
-        } catch (Exception e) {
-            log.error("Queue Exception Message: {}", e.getMessage());
-            return null;
-        }
     }
 }
