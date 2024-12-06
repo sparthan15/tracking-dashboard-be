@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 52319
 spring:
   application:
     name: ms-tickets
@@ -18,7 +18,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
-    register-with-eureka: true
+    register-with-eureka: false
   instance:
     non-secure-port-enabled: true
     secure-port-enabled: false
@@ -32,6 +32,11 @@ management:
 
 cloud:
   aws:
+    region: us-east-2
     credentials:
-      access-key: KEY
-      secret-key: SECRET
+      profile-name: tickets-microservice
+    sqs:
+      tickets:
+        url: https://sqs.us-east-2.amazonaws.com/225989353715/tickets-queue
+        queue-name: tickets-queue
+        waitingTimeSeconds: 10 #long polling

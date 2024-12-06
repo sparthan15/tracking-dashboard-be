@@ -17,6 +17,7 @@ public class SqsConfig {
     private String secretKey;
     @Value("${aws.role.ms-tickets-sqs}")
     private String microserviceRole;
+
     @Bean
     public SqsClient sqsClient() {
         return SqsClient.builder()

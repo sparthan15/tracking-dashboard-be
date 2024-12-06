@@ -1,5 +1,6 @@
 package com.example.tickets.service;
 
+import com.example.tickets.aws.sqs.TicketMessage;
 import com.example.tickets.controllers.TicketResponse;
 import com.example.tickets.persistence.MessageEntity;
 import com.example.tickets.persistence.MessageRepository;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 import static com.example.tickets.controllers.TicketResponse.Severity.*;
 
@@ -21,6 +24,7 @@ public interface TicketService {
     @Slf4j
     class TicketServiceDefault implements TicketService {
         private final MessageRepository messageRepository;
+        private final ISqsService sqsService;
 
         @Override
         public Flux<TicketResponse> getTickets() {
@@ -52,11 +56,13 @@ public interface TicketService {
 
         @Override
         public Flux<TicketResponse> findGroupedByTitle() {
-            Flux<MessageEntity> responseFlux =  this.messageRepository.findGroupedByTitle();
-            responseFlux.doOnNext(m->log.info(m.getValue()));
+            List<TicketMessage> ticketMessages = sqsService.pollMessages();
+            Flux<MessageEntity> responseFlux = this.messageRepository.findGroupedByTitle();
+            responseFlux.doOnNext(m -> log.info(m.getValue()));
 
             return null;
         }
+
     }
 }
 
