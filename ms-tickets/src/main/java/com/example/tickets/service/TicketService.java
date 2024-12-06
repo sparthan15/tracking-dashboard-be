@@ -56,7 +56,7 @@ public interface TicketService {
 
         @Override
         public Flux<TicketResponse> findGroupedByTitle() {
-            List<TicketMessage> ticketMessages = sqsService.pollMessages();
+            List<TicketMessage> ticketMessages = sqsService.receiveMessages();
             Flux<MessageEntity> responseFlux = this.messageRepository.findGroupedByTitle();
             responseFlux.doOnNext(m -> log.info(m.getValue()));
 

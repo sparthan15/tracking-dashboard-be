@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface ISqsService {
 
-    List<TicketMessage> pollMessages();
+    List<TicketMessage> receiveMessages();
 }
 
 @Component
@@ -28,7 +28,7 @@ class AwsSqsServiceImpl implements ISqsService {
     private String queueName;
 
     @Override
-    public List<TicketMessage> pollMessages() {
+    public List<TicketMessage> receiveMessages() {
         GetQueueUrlRequest getQueueRequest = GetQueueUrlRequest.builder()
                 .queueName(queueName)
                 .build();
