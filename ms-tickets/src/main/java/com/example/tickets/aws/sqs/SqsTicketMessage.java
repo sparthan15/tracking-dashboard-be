@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketMessage {
+class SqsTicketMessage {
 
     private String id;
     private String title;

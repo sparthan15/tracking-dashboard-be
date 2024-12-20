@@ -39,4 +39,6 @@ cloud:
       tickets:
         url: https://sqs.us-east-2.amazonaws.com/225989353715/tickets-queue
         queue-name: tickets-queue
-        waitingTimeSeconds: 10 #long polling
+        wait-time-seconds: 20 #long polling
+        visibility-time-out: 10
+        max-number-of-messages: 1

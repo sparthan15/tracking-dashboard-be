@@ -13,9 +13,9 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "messages")
+@Document(collection = "ticket_messages")
 @Builder
-public class MessageEntity {
+public class TicketMessageEntity {
     @Id
     private String id;
     private String title;
@@ -23,7 +23,7 @@ public class MessageEntity {
     private Map<String, String>metadata;
     private Instant createdAt = Instant.now();
 
-    public MessageEntity(String title, String value, Map<String, String>metadata){
+    public TicketMessageEntity(String title, String value, Map<String, String>metadata){
         this.title = title;
         this.value = value;
         this.metadata =metadata;
